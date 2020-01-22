@@ -50,6 +50,7 @@ public class ProductService {
         LOGGER.info("Creating product {}", request);
         Product product = new Product();
         product.setName(request.getName());
+        product.setImageUrl(request.getImageUrl());
 
         return productRepository.save(product);
     }
@@ -76,6 +77,7 @@ public class ProductService {
             ProductResponse productResponse = new ProductResponse();
             productResponse.setId(product.getId());
             productResponse.setName(product.getName());
+            productResponse.setImageUrl(product.getImageUrl());
 
             productResponses.add(productResponse);
         }

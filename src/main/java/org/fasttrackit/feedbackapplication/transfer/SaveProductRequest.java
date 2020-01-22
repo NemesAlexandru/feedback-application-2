@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 public class SaveProductRequest {
     @NotNull
     private String name;
+    private String imageUrl;
+
 
     public String getName() {
         return name;
@@ -14,10 +16,19 @@ public class SaveProductRequest {
         this.name = name;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString() {
         return "SaveProductRequest{" +
                 "name='" + name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }
