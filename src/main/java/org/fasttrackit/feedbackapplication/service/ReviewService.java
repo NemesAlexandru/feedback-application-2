@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -49,12 +50,10 @@ public class ReviewService {
                         "Review " + id + " does not exist."));
     }
 
-    @Transactional
-    public Page<ReviewResponse> getReviews(ReviewResponse request, Pageable pageable) {
-        LOGGER.info("Retrieving Reviews: {}", request);
-
+    public Page<ReviewResponse> findAllByProductId(long id, Pageable pageable){
+        LOGGER.info("Retrieving all reviews for product {}", id);
         Page<Review> reviews;
-        reviews = reviewRepository.findAll(pageable);
+        reviews = reviewRepository.findByProductId(id, pageable);
         List<ReviewResponse> reviewResponses = new ArrayList<>();
 
         for (Review review : reviews.getContent()) {
@@ -65,8 +64,27 @@ public class ReviewService {
 
             reviewResponses.add(reviewResponse);
         }
-        return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
-    }
+        Collections.reverse(reviewResponses);
+        return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());    }
+
+//    @Transactional
+//    public Page<ReviewResponse> getReviews(ReviewResponse request, Pageable pageable) {
+//        LOGGER.info("Retrieving Reviews: {}", request);
+//
+//        Page<Review> reviews;
+//        reviews = reviewRepository.findAll(pageable);
+//        List<ReviewResponse> reviewResponses = new ArrayList<>();
+//
+//        for (Review review : reviews.getContent()) {
+//            ReviewResponse reviewResponse = new ReviewResponse();
+//            reviewResponse.setId(review.getId());
+//            reviewResponse.setDescription(review.getDescription());
+//            reviewResponse.setReviewName(review.getReviewName());
+//
+//            reviewResponses.add(reviewResponse);
+//        }
+//        return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
+//    }
 
     public Review updateReview(long id, SaveReviewRequest request) {
         LOGGER.info("Updating review {}: {}", id, request);

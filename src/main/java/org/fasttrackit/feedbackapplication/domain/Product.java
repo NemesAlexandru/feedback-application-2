@@ -1,6 +1,7 @@
 package org.fasttrackit.feedbackapplication.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +12,13 @@ public class Product {
     @Id
     @GeneratedValue
     private long id;
-    @NotNull
+    @NotBlank
     private String name;
 
     private String imageUrl;
 
     @OneToMany
+    @JoinColumn(name = "product_id")
     private List<Review> reviews = new ArrayList<>();
 
     public void addReviewToProduct(Review review){

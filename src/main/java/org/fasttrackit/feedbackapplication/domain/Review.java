@@ -1,6 +1,7 @@
 package org.fasttrackit.feedbackapplication.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -9,9 +10,9 @@ public class Review {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
+    @NotBlank
     private String reviewName;
-    @NotNull
+    @NotBlank
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
